@@ -1,3 +1,7 @@
+#This is a CLI tool, allows you to automatically download wordlist or if you have your own custom word list, you can use that too, while you can choose to use default hardcoded worklist too - which we will 
+#keep growing, this tool will allow your to enter the API URL and then it automatically enumerats all the possible endpoints and then runs the basic top 10 OWASP vulnerability checks and saves the reports in json or xml format as you set. 
+#my name is Ravi Kant Verma and would love to see your comments on my project. The idea is to make this tool one of the best tool for API Vulnerability assessment.
+#Jai Shree Ganeshay Namah! 
 import os
 import sys
 import json
@@ -15,7 +19,7 @@ class TrApi:
         self.results = {}
 
     def print_banner(self):
-        # Simple ASCII banner
+        # rkv - Simple banner, Simply boasting my tool 
         print(r"""
  ______       
 |__  __|       /\      ______   || 
@@ -32,7 +36,8 @@ class TrApi:
         # List of Python package dependencies
         dependencies = ["requests"]
 
-        # Install Python dependencies
+        # Install Python dependencies,this is a fail safe mechanism to ensure the program works and hence by default install the dependency, 
+        # rkv -I will update in next version to first check if requests is installed and then move forward. 
         for dep in dependencies:
             os.system(f"pip3 install {dep}")
         
@@ -40,7 +45,7 @@ class TrApi:
         print("\nDependencies required:")
         for dep in dependencies:
             print(f"- {dep}")
-
+        #rkv -Downloading the word list, you can replace the url if you know a better word list or if have your own wordlist. 
     def download_common_wordlist(self):
         print("Downloading common word list...")
         wordlist_url = "https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/Web-Content/api/api-endpoints.txt"
@@ -67,7 +72,7 @@ class TrApi:
                     self.word_list = json.load(f)
         else:
             print("Using predefined word list...")
-            # Hardcoded word list
+            # rkv- This is Hardcoded word list and can be updated as we add more
             self.word_list = ["", "index", "home", "api", "users", "products", "orders", "login", "register", "admin", "status", "health",
             "swagger.json", "openapi.json", "robots.txt", "sitemap.xml", "static", "assets", "js", "css"]
         
@@ -93,7 +98,7 @@ class TrApi:
         
         if choice == 'y':
             while True:
-                custom_path = input("Enter the path to your custom word list (.txt, .xml, .json): ")
+                custom_path = input("Enter the path to your custom word list along with name and extention (.txt, .xml, .json): ")
                 if os.path.exists(custom_path) and custom_path.endswith(('.txt', '.xml', '.json')):
                     self.load_word_list(custom_path)
                     break
@@ -169,7 +174,7 @@ class TrApi:
         queue = Queue()
 
         def owasp_checks(endpoint):
-            # Vulnerability checks
+            # rkv - Vulnerability checks using OWASP top 10 checks. 
             return {
                 "SQL Injection": self.sql_injection_check(endpoint),
                 "Broken Authentication": self.broken_authentication_check(endpoint),
@@ -195,14 +200,14 @@ class TrApi:
             queue.put(endpoint)
 
         threads = []
-        for _ in range(10):  # Number of threads
+        for _ in range(10):  # rkv - Number of threads one for each check
             thread = threading.Thread(target=worker)
             thread.start()
             threads.append(thread)
 
         queue.join()
 
-    # Actual vulnerability checks
+    # rkv - Actual vulnerability checks - I will be enhancing these functions to make it stronger. Beef it up bro! 
     def sql_injection_check(self, endpoint):
         test_payload = "' OR '1'='1"
         try:
@@ -293,7 +298,7 @@ class TrApi:
         return "Not vulnerable"
 
     def logging_monitoring_check(self, endpoint):
-        # Placeholder check
+        # rkv - Placeholder check need to add the code
         return "Not vulnerable - placeholder for logging & monitoring checks"
 
     def save_results(self):
@@ -312,7 +317,7 @@ class TrApi:
         print(f"Results saved to {self.output_path}")
 
     def run(self):
-        # Run all steps
+        # rkv - Run run run run all steps. 
         self.get_user_input()
         self.enumerate_endpoints()
         self.vulnerability_scan()
