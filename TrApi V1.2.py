@@ -1,3 +1,6 @@
+# My name is Ravi Kant Verma, I have always had an affinity towards the GUI and hence this is the same tool as TrApi1.1 but has a GUI. 
+# This doesnot download the word list, it allows you add a word list file to enumrate the endpoints and has progress bar for UI users lol
+# Bam Bam Bhole! 
 import sys
 import requests
 import json
